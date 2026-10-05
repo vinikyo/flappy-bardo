@@ -10,6 +10,9 @@ public class LogicScript : MonoBehaviour
     
     public GameObject gameOverScreen;
 
+    private bool gameIsOver = false;
+
+    public AudioSource gameover;
 
     [ContextMenu("Add Score")]
     public void addScore(int scoreToAdd)
@@ -23,7 +26,17 @@ public class LogicScript : MonoBehaviour
     }
     public void gameOver()
     {
+        if (gameIsOver)
+        {
+            return;
+        }
+
+        gameIsOver = true;
         Debug.Log("GAME OVER CHAMADO");
         gameOverScreen.SetActive(true);
+    }
+    public void playGameOverSound()
+    {
+        gameover.PlayOneShot(gameover.clip);
     }
 }

@@ -10,6 +10,8 @@ public class BirdScript : MonoBehaviour
 
     public bool birdIsAlive = true;
 
+
+
     public LogicScript logic;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -25,12 +27,31 @@ public class BirdScript : MonoBehaviour
             myRigidbody.linearVelocity = Vector2.up * flapStrength;
     
         }
+
+        Vector3 viewportPosition = Camera.main.WorldToViewportPoint(transform.position);
+
+        if (viewportPosition.y > 1 || viewportPosition.y < 0)
+        {
+            die();
+        }
     }
+
+    private void die()
+    {
+        if (!birdIsAlive)
+        {
+            return;
+        }
+
+        birdIsAlive = false;
+        logic.playGameOverSound();
+        logic.gameOver();
+    }
+
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        logic.gameOver();
-        birdIsAlive = false;
+        die();
     }
 }
     
